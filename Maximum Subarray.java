@@ -7,7 +7,6 @@ public class Solution {
         // function: local[i] = max(local[i-1]+nums[i], nums[i]);
         //           res = max(local[i])  over i
         // initialization: local[0] = nums[0];
-        
         if (nums == null || nums.length == 0) {
             return 0;
         }
