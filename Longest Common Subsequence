@@ -1,0 +1,42 @@
+public class Solution {
+    /**
+     * @param A, B: Two strings.
+     * @return: The length of longest common subsequence of A and B.
+     */
+    public int longestCommonSubsequence(String A, String B) {
+        // state: f[i][j] the length of longest common subsequence of A(0:i) and B(0:j) with A(i) and B(j) as the last element
+        // function: f[i][j] = max(f[i-1][j], f[i][j-1], f[i-1][j-1]+1) if A(i-1) == B(j-1)
+        //                     max(f[i-1][j], f[i][j-1])  otherwise
+        // initialization: f[i][0] = 0; f[0][j]=0;
+        // answer: max(f[i][j]) over all i and j
+        
+        if (A == null || B == null) {
+            return 0;
+        }
+        
+        int n1 = A.length();
+        int n2 = B.length();
+        if (n1 == 0 || n2 == 0) {
+            return 0;
+        }
+        
+        int[][] maxLen = new int[n1+1][n2+2];
+        // for (int i = 0; i <= n1; i++) {
+        //     maxLen[i][0] = 0;
+        // }
+        // for (int j = 0; j <= n2; j++) {
+        //     maxLen[0][j] = 0;
+        // }
+        
+        for (int i = 1; i <= n1; i++) {
+            for (int j = 1; j <= n2; j++) {
+                maxLen[i][j] = Math.max(maxLen[i-1][j], maxLen[i][j-1]);
+                if (A.charAt(i-1) == B.charAt(j-1)) {
+                    maxLen[i][j] = Math.max(maxLen[i][j], maxLen[i-1][j-1] + 1);
+                }
+            }
+        }
+        
+        return maxLen[n1][n2];
+    }
+}
