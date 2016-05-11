@@ -1,0 +1,36 @@
+public class Solution {
+    /**
+     * @param S, T: Two string.
+     * @return: Count the number of distinct subsequences
+     */
+    public int numDistinct(String S, String T) {
+        // state: f[i][j] is the number of distinct subsequences of T(0:i) in S(0:j)
+        // function: f[i][j] = max(f[i][j-1], f[i-1][j-1]) if T(i-1) == S(j-1)
+        //                      f[i][j-1] otherwise
+        // initialization: f[0][j] = 1
+        //                 f[i][0] = 0 i >=1
+        
+        if (S.length() < T.length()) {
+            return 0;
+        }
+        
+        int nS = S.length();
+        int nT = T.length();
+        
+        int[][] number = new int[nT+1][nS+1];
+        for (int j = 0; j <= nS; j++) {
+            number[0][j] = 1;
+        }
+        
+        for (int i = 1; i <= nT; i++) {
+            for (int j = 1; j <= nS; j++) {
+                number[i][j] = number[i][j-1];
+                if (T.charAt(i-1) == S.charAt(j-1)) {
+                    number[i][j] += number[i-1][j-1];
+                }
+            }
+        }
+        
+        return number[nT][nS];
+    }
+}
