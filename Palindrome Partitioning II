@@ -1,0 +1,49 @@
+public class Solution {
+    /**
+     * @param s a string
+     * @return an integer
+     */
+     
+    private void setIsPalindrome(boolean[][] isPalindrome, String s) {
+        int n = s.length();
+        for (int i = 0; i < n; i++) {
+            isPalindrome[i][i] = true;
+        }
+        for (int i = 0; i < n-1; i++) {
+            if (s.charAt(i) == s.charAt(i+1)) {
+                isPalindrome[i][i+1] = true;
+            }
+        }
+        
+        for (int l = 2; l <= n-1; l++) {
+            for (int i = 0; i+l < n; i++) {
+                if (s.charAt(i) == s.charAt(i+l) && isPalindrome[i+1][i+l-1]) {
+                    isPalindrome[i][i+l] = true;
+                }
+            }
+        }
+    }
+    public int minCut(String s) {
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
+        
+        int n = s.length();
+        boolean[][] isPalindrome = new boolean[n][n];
+        setIsPalindrome(isPalindrome, s);
+        
+        int[] dp = new int[n+1];
+        dp[0] = -1;
+        for (int i = 0; i < n; i++) {
+            dp[i+1] = i;
+            for (int j = -1; j < i; j++) {
+                if (isPalindrome[j+1][i]) {
+                    dp[i+1] = Math.min(dp[j+1]+1, dp[i+1]);
+                }
+            }
+        }
+        
+        return dp[n];
+        
+    }
+};
