@@ -13,12 +13,12 @@ public class Solution {
             isPalindrome[i][i] = true;
         }
         for (int i = 0; i < n - 1; i++) {
-            isPalindrome[i][i + 1] = s.charAt(i) == s.charAt(i + 1);
+            isPalindrome[i][i + 1] = (s.charAt(i) == s.charAt(i + 1));
         }
         
         for (int l = 2; l < n; l++) {
             for (int i = 0; i + l < n; i++) {
-                isPalindrome[i][i + l] =(s.charAt(i) ==  s.charAt(i+l) && isPalindrome[i + 1][i + l - 1]);
+                isPalindrome[i][i + l] = (s.charAt(i) ==  s.charAt(i+l) && isPalindrome[i + 1][i + l - 1]);
             }
         }
     }
